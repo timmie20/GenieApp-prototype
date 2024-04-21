@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useContext } from "react";
+import { AppContext } from "@/context/AppContext";
 
 const Navbar = () => {
+  const { signIn } = useContext(AppContext);
   return (
     <>
       <div className="flex h-fit items-center justify-between py-3">
@@ -14,6 +17,8 @@ const Navbar = () => {
           <Button asChild variant="link">
             <Link to="/feeds">Feeds</Link>
           </Button>
+
+          <Button onClick={signIn}>sign in</Button>
         </div>
       </div>
     </>
