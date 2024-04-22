@@ -74,3 +74,7 @@
     @apply bg-background text-foreground;
   }
 }
+/* 
+.cta button {
+  @apply rounded-full bg-primary px-2 py-[2px] text-center text-[14px] text-white hover:bg-secondary/100 hover:text-foreground;
+} */
