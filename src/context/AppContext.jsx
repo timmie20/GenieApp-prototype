@@ -1,33 +1,27 @@
-import { auth, db } from "@/config/firebase";
-import { signInAnonymously } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/config/firebase";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { createContext } from "react";
 
 export const AppContext = createContext(null);
 
 export const AppContextProvider = ({ children }) => {
-  const signIn = async () => {
-    try {
-      const user = await signInAnonymously(auth);
-      console.log(user.user);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   const createWishPost = (name, wishDesc) => {
-    const postFormValues = {
+    const postValues = {
       name: name,
       wishDesc: wishDesc,
     };
 
     return addDoc(collection(db, "Posts"), {
-      postFormValues,
+      postValues,
     });
   };
 
+  const fetchPostsData = () => {
+    return getDocs(collection(db, "Posts"));
+  };
+
   return (
-    <AppContext.Provider value={{ createWishPost, signIn }}>
+    <AppContext.Provider value={{ createWishPost, fetchPostsData }}>
       {children}
     </AppContext.Provider>
   );

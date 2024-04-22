@@ -2,22 +2,29 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { AppContext } from "@/context/AppContext";
+import { AuthContext } from "@/context/AuthContext";
 import { useContext, useState } from "react";
 
 const CreateWish = () => {
   const [name, setName] = useState("");
   const [wishDesc, setWishDesc] = useState("");
   const { createWishPost } = useContext(AppContext);
+  const { user } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      await createWishPost(name, wishDesc);
-      setName("");
-      setWishDesc("");
-    } catch (error) {
-      console.log(error.message);
+    if (!user) {
+      alert("Sign in to create a post");
+    } else {
+      try {
+        await createWishPost(name, wishDesc);
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setName("");
+        setWishDesc("");
+      }
     }
   };
 
@@ -36,6 +43,7 @@ const CreateWish = () => {
             placeholder="Name"
             type="text"
             id="name"
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -44,8 +52,9 @@ const CreateWish = () => {
             Your Message
           </label>
           <Textarea
-            placeholder="Type your wish here."
+            placeholder="Make your wish here."
             id="wish"
+            value={wishDesc}
             onChange={(e) => setWishDesc(e.target.value)}
           />
           <p className="text-sm text-muted-foreground">
