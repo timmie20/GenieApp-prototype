@@ -17,6 +17,8 @@ export const AuthContextProvider = ({ children }) => {
   const [userAccountData, setUserAccountData] = useState(null); // userAccountData is generated from specific user gotten from firebase collection(Users)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const navigate = useNavigate();
+
   const createUserDocument = async (currentUser) => {
     const docRef = doc(db, "Users", currentUser?.uid);
 
