@@ -5,21 +5,21 @@ import React, { useContext, useEffect, useState } from "react";
 
 const Feeds = () => {
   const { fetchPostsData } = useContext(AppContext);
-  const { user } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState();
 
   const displayPosts = async () => {
-    if (!user) {
+    if (!currentUser) {
       return;
     } else {
       try {
         const querySnapShot = await fetchPostsData();
         const posts = querySnapShot.docs.map((doc) => ({
-          id: doc.id,
+          postId: doc.id,
           ...doc.data(),
         }));
         setPosts(posts);
-        console.log("ran");
+        console.log("ran", posts);
       } catch (error) {
         console.log(error.message);
       }
@@ -33,14 +33,14 @@ const Feeds = () => {
   return (
     <>
       <div className="py-3">
-        {!user ? (
+        {!currentUser ? (
           <h1 className="text-center text-2xl">
             Sign in above to view feed content
           </h1>
         ) : (
           <div className="mx-auto flex w-[70%] flex-col gap-4">
             {posts?.map((post) => (
-              <PostWish post={post} key={post.id} />
+              <PostWish post={post} key={post.postId} />
             ))}
           </div>
         )}
