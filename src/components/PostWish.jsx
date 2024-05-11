@@ -71,7 +71,7 @@ const PostWish = ({ post }) => {
               <Badge>Comment</Badge>
             </PopoverTrigger>
             <PopoverContent className="w-80">
-              <CommentsBlock />
+              <CommentsBlock post={post} />
             </PopoverContent>
           </Popover>
 

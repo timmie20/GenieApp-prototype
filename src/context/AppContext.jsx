@@ -30,11 +30,9 @@ export const AppContextProvider = ({ children }) => {
     };
 
     try {
-      const postRef = await addDoc(collection(db, "posts"), {
+      await addDoc(collection(db, "posts"), {
         ...postContent,
       });
-      await addDoc(collection(postRef, "comments"));
-      console.log(postRef.id);
     } catch (error) {
       console.log(error.message);
     }
@@ -70,8 +68,8 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
-  const updateLikeCount = async (isLiked, id) => {
-    const postRef = doc(db, "posts", id);
+  const updateLikeCount = async (isLiked, postId) => {
+    const postRef = doc(db, "posts", postId);
     try {
       const transactionResult = await runTransaction(
         db,
@@ -98,17 +96,19 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
-  const addAComment = async (content) => {
-    const postRef = collection(db, "posts");
+  const addAComment = async (comment, postId) => {
+    const postCollectionRef = doc(db, "posts", postId);
+    const commentsCollectionRef = collection(postCollectionRef, "comments");
+
     const commentObj = {
       writersId: userAccountData?.uid,
       writersName: userAccountData?.userName,
-      content: content,
+      content: comment,
       imgURL: userAccountData?.imgURL,
       commentTimeStamp: serverTimestamp(),
     };
     try {
-      await addDoc(collection(postRef, "comments"), commentObj);
+      await addDoc(commentsCollectionRef, commentObj);
     } catch (error) {
       console.log(error.message);
     }

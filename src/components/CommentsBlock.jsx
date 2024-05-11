@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
+import { AppContext } from "@/context/AppContext";
 
-const CommentsBlock = () => {
+const CommentsBlock = ({ post }) => {
   const [comment, setComment] = useState("");
+  const { addAComment } = useContext(AppContext);
 
-  const uploadComment = (event) => {
+  const uploadComment = async (event) => {
     event.preventDefault();
-    console.log(comment);
+    try {
+      await addAComment(comment, post?.postId);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setComment("");
+    }
   };
 
   return (
