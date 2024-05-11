@@ -46,7 +46,9 @@ const CreateWish = () => {
             Your message will be copied to the support team.
           </p>
         </div>
-        <Button type="submit">create</Button>
+        <Button type="submit" size="lg">
+          create
+        </Button>
       </form>
     </>
   );

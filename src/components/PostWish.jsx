@@ -3,6 +3,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { AppContext } from "@/context/AppContext";
 import { AuthContext } from "@/context/AuthContext";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import CommentsBlock from "./CommentsBlock";
 
 const PostWish = ({ post }) => {
   const { updateLikeCount } = useContext(AppContext);
@@ -59,10 +61,20 @@ const PostWish = ({ post }) => {
 
         <div className="cta mt-4 flex gap-2">
           <Badge>Grant wish</Badge>
+
           <Badge onClick={handleLikeToggle}>
             {!isLiked ? "Like" : "Liked"} {likesCount > 0 && likesCount}
           </Badge>
-          <Badge>Comment</Badge>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <Badge>Comment</Badge>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <CommentsBlock />
+            </PopoverContent>
+          </Popover>
+
           <Badge>Repost</Badge>
         </div>
       </div>
