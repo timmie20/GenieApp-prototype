@@ -19,7 +19,6 @@ const Feeds = () => {
           ...doc.data(),
         }));
         setPosts(posts);
-        console.log("ran", posts);
       } catch (error) {
         console.log(error.message);
       }

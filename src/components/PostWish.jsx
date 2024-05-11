@@ -1,8 +1,43 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
+import { AppContext } from "@/context/AppContext";
+import { AuthContext } from "@/context/AuthContext";
 
 const PostWish = ({ post }) => {
+  const { updateLikeCount } = useContext(AppContext);
+  const { userAccountData } = useContext(AuthContext);
+  const [likesCount, setLikesCount] = useState(post.likes);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const isUserInList = () => {
+    //checks if user is present in array and returns a booleen
+    return post.likedBy.some(
+      (userObject) => userObject.userId === userAccountData?.uid,
+    );
+  };
+  console.log(isLiked);
+
+  const handleLikeToggle = async () => {
+    const newIsLiked = !isLiked;
+    const newLikesCount = await updateLikeCount(newIsLiked, post?.postId);
+    if (newLikesCount !== null) {
+      if (newLikesCount <= 0) {
+        setIsLiked(false);
+      } else {
+        setIsLiked(true);
+      }
+      setLikesCount(newLikesCount);
+    } else {
+      setIsLiked(false);
+    }
+  };
+
+  useEffect(() => {
+    const present = isUserInList();
+    setIsLiked(present);
+  }, []);
+
   return (
     <div className="flex h-fit w-full rounded-md bg-slate-200 p-4">
       <div className="w-[50px]">
@@ -24,7 +59,9 @@ const PostWish = ({ post }) => {
 
         <div className="cta mt-4 flex gap-2">
           <Badge>Grant wish</Badge>
-          <Badge>Like (0)</Badge>
+          <Badge onClick={handleLikeToggle}>
+            {!isLiked ? "Like" : "Liked"} {likesCount > 0 && likesCount}
+          </Badge>
           <Badge>Comment</Badge>
           <Badge>Repost</Badge>
         </div>
