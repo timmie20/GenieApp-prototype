@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 
 const Navbar = () => {
-  const { signInAnonymous, signInWithGoogle, logOut } = useContext(AuthContext);
+  const { signInWithGoogle, logOut } = useContext(AuthContext);
   return (
     <>
       <div className="flex h-fit items-center justify-between py-3">
@@ -21,7 +21,9 @@ const Navbar = () => {
         </div>
 
         <div className="flex gap-2">
-          <Button onClick={signInAnonymous}>sign in as anonymous</Button>
+          {/* <Button onClick={signInAnonymous} size="sm">
+            sign in as anonymous
+          </Button> */}
 
           <Button onClick={signInWithGoogle}>sign in with google</Button>
 

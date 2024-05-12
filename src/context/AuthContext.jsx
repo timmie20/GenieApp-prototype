@@ -43,7 +43,6 @@ export const AuthContextProvider = ({ children }) => {
       if (docSnap.exists()) {
         const userData = docSnap.data();
         setUserAccountData(userData);
-        console.log(userAccountData); // Log user data here (once)
         return;
       } else {
         createUserDocument(currentUser); //create userAccountData based of currentUser
@@ -54,15 +53,14 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const signInAnonymous = async () => {
-    try {
-      const user = await signInAnonymously(auth);
-      console.log(user.user);
-      alert("signed in as anonymous");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const signInAnonymous = async () => {
+  //   try {
+  //     await signInAnonymously(auth);
+  //     alert("signed in as anonymous");
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -104,7 +102,6 @@ export const AuthContextProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        signInAnonymous,
         signInWithGoogle,
         logOut,
         userAccountData,

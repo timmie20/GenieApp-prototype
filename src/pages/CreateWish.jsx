@@ -8,9 +8,11 @@ const CreateWish = () => {
   const [wishDesc, setWishDesc] = useState("");
   const { createWishPost } = useContext(AppContext);
   const { userAccountData } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!userAccountData) {
       console.log("Sign in to create a post");
@@ -21,6 +23,7 @@ const CreateWish = () => {
         console.log(error.message);
       } finally {
         setWishDesc("");
+        setLoading(false);
       }
     }
   };
@@ -47,7 +50,7 @@ const CreateWish = () => {
           </p>
         </div>
         <Button type="submit" size="lg">
-          create
+          {!loading ? "Create" : "Creating Wish"}
         </Button>
       </form>
     </>

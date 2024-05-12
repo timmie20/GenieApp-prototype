@@ -5,12 +5,15 @@ import { AppContext } from "@/context/AppContext";
 import { AuthContext } from "@/context/AuthContext";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import CommentsBlock from "./CommentsBlock";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "@/config/firebase";
 
 const PostWish = ({ post }) => {
   const { updateLikeCount } = useContext(AppContext);
   const { userAccountData } = useContext(AuthContext);
   const [likesCount, setLikesCount] = useState(post.likes);
   const [isLiked, setIsLiked] = useState(false);
+  const [allComments, setAllComments] = useState();
 
   const isUserInList = () => {
     //checks if user is present in array and returns a booleen
@@ -18,7 +21,6 @@ const PostWish = ({ post }) => {
       (userObject) => userObject.userId === userAccountData?.uid,
     );
   };
-  console.log(isLiked);
 
   const handleLikeToggle = async () => {
     const newIsLiked = !isLiked;
@@ -39,6 +41,21 @@ const PostWish = ({ post }) => {
     const present = isUserInList();
     setIsLiked(present);
   }, []);
+
+  const getAllComments = async (postId) => {
+    try {
+      const querySnapShot = await getDocs(
+        collection(db, "posts", postId, "comments"),
+      );
+      const data = querySnapShot.docs.map((doc) => ({
+        commentId: doc.id,
+        ...doc.data(),
+      }));
+      setAllComments(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div className="flex h-fit w-full rounded-md bg-slate-200 p-4">
@@ -67,11 +84,18 @@ const PostWish = ({ post }) => {
           </Badge>
 
           <Popover>
-            <PopoverTrigger asChild>
+            <PopoverTrigger
+              asChild
+              onClick={() => getAllComments(post?.postId)}
+            >
               <Badge>Comment</Badge>
             </PopoverTrigger>
             <PopoverContent className="w-80">
-              <CommentsBlock post={post} />
+              {!allComments ? (
+                <h3 className="text-base">loading</h3>
+              ) : (
+                <CommentsBlock post={post} allComments={allComments} />
+              )}
             </PopoverContent>
           </Popover>
 

@@ -3,8 +3,9 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { AppContext } from "@/context/AppContext";
+import Comment from "./Comment";
 
-const CommentsBlock = ({ post }) => {
+const CommentsBlock = ({ post, allComments }) => {
   const [comment, setComment] = useState("");
   const { addAComment } = useContext(AppContext);
 
@@ -22,7 +23,11 @@ const CommentsBlock = ({ post }) => {
   return (
     <>
       <form onSubmit={uploadComment} autoComplete="off">
-        <ScrollArea></ScrollArea>
+        <ScrollArea className="mb-2 h-[170px] p-0">
+          {allComments?.map((comment) => (
+            <Comment comment={comment} key={comment?.commentId} />
+          ))}
+        </ScrollArea>
         <div className="flex flex-col items-end">
           <Input
             id="comments"
