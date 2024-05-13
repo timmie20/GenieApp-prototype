@@ -1,18 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { AppContext } from "@/context/AppContext";
+import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import Comment from "./Comment";
+import { db } from "@/config/firebase";
 
-const CommentsBlock = ({ post, allComments }) => {
+const CommentsBlock = ({ post, allComments, setAllComments }) => {
   const [comment, setComment] = useState("");
   const { addAComment } = useContext(AppContext);
+  const [commentsUpdated, setCommentsUpdated] = useState(false);
 
-  const uploadComment = async (event) => {
+  const writeNewComment = async (event) => {
     event.preventDefault();
     try {
       await addAComment(comment, post?.postId);
+      setCommentsUpdated(true); // Set to true only once after successful addition
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -20,9 +24,30 @@ const CommentsBlock = ({ post, allComments }) => {
     }
   };
 
+  useEffect(() => {
+    if (commentsUpdated) {
+      const commentsRef = collection(
+        doc(db, "posts", post?.postId),
+        "comments",
+      );
+      const unsubscribe = onSnapshot(query(commentsRef), (querySnapshot) => {
+        const newComments = querySnapshot.docs.map((doc) => ({
+          commentId: doc.id,
+          ...doc.data(),
+        }));
+        console.log(newComments);
+        set;
+        setAllComments(newComments);
+        setCommentsUpdated(false);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [commentsUpdated]);
+
   return (
     <>
-      <form onSubmit={uploadComment} autoComplete="off">
+      <form onSubmit={writeNewComment} autoComplete="off">
         <ScrollArea className="mb-2 h-[170px] p-0">
           {allComments?.map((comment) => (
             <Comment comment={comment} key={comment?.commentId} />

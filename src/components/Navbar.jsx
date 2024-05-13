@@ -25,9 +25,13 @@ const Navbar = () => {
             sign in as anonymous
           </Button> */}
 
-          <Button onClick={signInWithGoogle}>sign in with google</Button>
+          <Button onClick={signInWithGoogle} size="lg">
+            sign in with google
+          </Button>
 
-          <Button onClick={logOut}>sign out</Button>
+          <Button onClick={logOut} size="lg">
+            sign out
+          </Button>
         </div>
       </div>
     </>

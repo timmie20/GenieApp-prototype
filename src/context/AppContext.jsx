@@ -96,7 +96,7 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
-  const addAComment = async (comment, postId) => {
+  const addAComment = (comment, postId) => {
     const postCollectionRef = doc(db, "posts", postId);
     const commentsCollectionRef = collection(postCollectionRef, "comments");
 
@@ -107,12 +107,9 @@ export const AppContextProvider = ({ children }) => {
       imgURL: userAccountData?.imgURL,
       commentTimeStamp: serverTimestamp(),
     };
-    try {
-      await addDoc(commentsCollectionRef, commentObj);
-    } catch (error) {
-      console.log(error.message);
-    }
+    return addDoc(commentsCollectionRef, commentObj);
   };
+
   return (
     <AppContext.Provider
       value={{ createWishPost, fetchPostsData, updateLikeCount, addAComment }}

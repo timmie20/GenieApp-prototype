@@ -5,7 +5,7 @@ import { AppContext } from "@/context/AppContext";
 import { AuthContext } from "@/context/AuthContext";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import CommentsBlock from "./CommentsBlock";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, doc } from "firebase/firestore";
 import { db } from "@/config/firebase";
 
 const PostWish = ({ post }) => {
@@ -43,15 +43,19 @@ const PostWish = ({ post }) => {
   }, []);
 
   const getAllComments = async (postId) => {
+    const commentsRef = collection(doc(db, "posts", postId), "comments");
+    const querySnapShot = await getDocs(commentsRef);
+    const data = querySnapShot.docs.map((doc) => ({
+      commentId: doc.id,
+      ...doc.data(),
+    }));
+    return data;
+  };
+
+  const handleGetAllComments = async (postId) => {
     try {
-      const querySnapShot = await getDocs(
-        collection(db, "posts", postId, "comments"),
-      );
-      const data = querySnapShot.docs.map((doc) => ({
-        commentId: doc.id,
-        ...doc.data(),
-      }));
-      setAllComments(data);
+      const comments = await getAllComments(postId);
+      setAllComments(comments);
     } catch (error) {
       console.log(error.message);
     }
@@ -86,7 +90,7 @@ const PostWish = ({ post }) => {
           <Popover>
             <PopoverTrigger
               asChild
-              onClick={() => getAllComments(post?.postId)}
+              onClick={() => handleGetAllComments(post?.postId)}
             >
               <Badge>Comment</Badge>
             </PopoverTrigger>
@@ -94,7 +98,11 @@ const PostWish = ({ post }) => {
               {!allComments ? (
                 <h3 className="text-base">loading</h3>
               ) : (
-                <CommentsBlock post={post} allComments={allComments} />
+                <CommentsBlock
+                  post={post}
+                  allComments={allComments}
+                  setAllComments={setAllComments}
+                />
               )}
             </PopoverContent>
           </Popover>
