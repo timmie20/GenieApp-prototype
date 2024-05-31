@@ -53,15 +53,6 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // const signInAnonymous = async () => {
-  //   try {
-  //     await signInAnonymously(auth);
-  //     alert("signed in as anonymous");
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {

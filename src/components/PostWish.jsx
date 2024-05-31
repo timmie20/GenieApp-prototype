@@ -113,5 +113,4 @@ const PostWish = ({ post }) => {
     </div>
   );
 };
-
 export default PostWish;

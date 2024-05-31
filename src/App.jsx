@@ -4,6 +4,7 @@ import CreateWish from "./pages/CreateWish";
 import Feeds from "./pages/Feeds";
 import { AppContextProvider } from "./context/AppContext";
 import { AuthContextProvider } from "./context/AuthContext";
+import Waitlist from "./pages/Waitlist";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
               <Route index element={<CreateWish />} />
               <Route path="feeds" element={<Feeds />} />
             </Route>
+            <Route path="/waitlist" element={<Waitlist />} />
           </Routes>
         </AppContextProvider>
       </AuthContextProvider>
