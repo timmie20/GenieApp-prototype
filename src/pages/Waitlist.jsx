@@ -1,12 +1,16 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import axios from "axios";
+import WaitlistNav from "@/components/WaitlistNav";
+import lamp from "../assets/images/genie lamp.png";
+import "ldrs/bouncy";
+import { toast } from "sonner";
+import SuccessCheck from "@/components/SuccessCheck";
 
 const Waitlist = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const apiKey = import.meta.env.VITE_BREVO_API_KEY;
 
@@ -99,10 +103,12 @@ const Waitlist = () => {
       await axios.request(options);
       sendWelcomeEmail();
       setLoading(false);
-      setError(null);
+      setSuccess(true);
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      toast("Unable to join waitlist", {
+        description: "Check network or Contact might already exist",
+      });
     } finally {
       setEmail("");
       setName("");
@@ -110,21 +116,52 @@ const Waitlist = () => {
   };
 
   return (
-    <form onSubmit={joinWaitlist}>
-      <Input
-        type="email"
-        className="w-full"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <Input
-        type="text"
-        className="w-full"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <Button type="submit">join</Button>
-    </form>
+    <>
+      <div className="h-screen bg-gradient-to-b from-[#1753F5] from-60% to-white">
+        <WaitlistNav />
+        <div className="mt-10 flex justify-center">
+          <div className="flex w-full max-w-[646px] flex-col items-center text-wrap text-center text-white">
+            <h1 className="text-[56px] font-semibold leading-none md:text-[64px]">
+              Where your wishes get granted
+            </h1>
+            <form className="w-full max-w-[421px] px-3" onSubmit={joinWaitlist}>
+              <p className="my-8 text-wrap text-lg md:text-base">
+                The genie app allows you make wishes that can be granted by
+                anybody on the app.
+              </p>
+              <Input
+                className="font-Inter h-[50px] rounded-full border-none bg-white/[13%] px-9 py-4 text-base text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-transparent"
+                placeholder="Your name"
+                type="text"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+              <Input
+                className="font-Inter my-[10px] h-[50px] rounded-full border-none bg-white/[13%] px-9 py-4 text-base text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-transparent"
+                placeholder="example@gmail.com"
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+              <button
+                className={`inline-flex w-full items-center justify-center rounded-full bg-white px-9 py-4 text-base text-[#1753F5] disabled:pointer-events-none disabled:opacity-90 ${success ? "bg-green-400" : ""}`}
+                type="submit"
+                disabled={!name || !email || success}
+              >
+                {loading ? (
+                  <l-bouncy size="32" speed="1.75" color="#255fff"></l-bouncy>
+                ) : success ? (
+                  <SuccessCheck />
+                ) : (
+                  "Join the waitlist"
+                )}
+              </button>
+            </form>
+            <img src={lamp} alt="image of wishing lamp" className="" />
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
