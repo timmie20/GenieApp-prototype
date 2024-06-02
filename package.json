@@ -20,7 +20,6 @@
     "clsx": "^2.1.0",
     "firebase": "^10.11.0",
     "framer-motion": "^11.2.10",
-    "gh-pages": "^6.1.1",
     "ldrs": "^1.0.2",
     "lucide-react": "^0.372.0",
     "next-themes": "^0.3.0",
@@ -30,8 +29,7 @@
     "react-router-dom": "^6.22.3",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
-    "uuid": "^9.0.1"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

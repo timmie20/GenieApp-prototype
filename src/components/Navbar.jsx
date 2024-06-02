@@ -12,19 +12,15 @@ const Navbar = () => {
 
         <div>
           <Button asChild variant="link">
-            <Link to="/">Create wish</Link>
+            <Link to="/demo">Create wish</Link>
           </Button>
 
           <Button asChild variant="link">
-            <Link to="/feeds">Feeds</Link>
+            <Link to="/demo/feeds">Feeds</Link>
           </Button>
         </div>
 
         <div className="flex gap-2">
-          {/* <Button onClick={signInAnonymous} size="sm">
-            sign in as anonymous
-          </Button> */}
-
           <Button onClick={signInWithGoogle} size="lg">
             sign in with google
           </Button>

@@ -12,11 +12,11 @@ const App = () => {
       <AuthContextProvider>
         <AppContextProvider>
           <Routes>
-            <Route path="/" element={<AppLayout />}>
+            <Route path="/" element={<Waitlist />} />
+            <Route path="/demo" element={<AppLayout />}>
               <Route index element={<CreateWish />} />
-              <Route path="feeds" element={<Feeds />} />
+              <Route path="/demo/feeds" element={<Feeds />} />
             </Route>
-            <Route path="/waitlist" element={<Waitlist />} />
           </Routes>
         </AppContextProvider>
       </AuthContextProvider>
