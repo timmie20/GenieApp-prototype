@@ -58,9 +58,7 @@ const Waitlist = () => {
               <p>
                 Hey ${name}, Thank you for joining the waitlist for Genie! We're
                 absolutely thrilled to have you on board. Genie is all about making
-                every moment magical. While we're hard at work developing it, we can't
-                wait to bring you this powerful tool that will give you the ability to
-                make wishes without having a magical lamp. Keep an eye on your inbox for
+                every moment magical. We are currently in development so keep an eye on your inbox for
                 updates on our progress, your patience and support mean the world to us!
                 🪄
               </p>
@@ -130,14 +128,14 @@ const Waitlist = () => {
                 anybody on the app.
               </p>
               <Input
-                className="font-Inter h-[50px] rounded-full border-none bg-white/[13%] px-9 py-4 text-base text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-transparent"
+                className="h-[50px] rounded-full border-none bg-white/[13%] px-9 py-4 font-Inter text-base text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-transparent"
                 placeholder="Your name"
                 type="text"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
               />
               <Input
-                className="font-Inter my-[10px] h-[50px] rounded-full border-none bg-white/[13%] px-9 py-4 text-base text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-transparent"
+                className="my-[10px] h-[50px] rounded-full border-none bg-white/[13%] px-9 py-4 font-Inter text-base text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-transparent"
                 placeholder="example@gmail.com"
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
