@@ -10,6 +10,8 @@ const CreateWish = () => {
   const { userAccountData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
+  console.log("hello");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

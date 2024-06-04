@@ -79,6 +79,7 @@ const Waitlist = () => {
 
   const joinWaitlist = async (event) => {
     event.preventDefault();
+
     const options = {
       method: "POST",
       url: "https://api.brevo.com/v3/contacts",
@@ -142,9 +143,9 @@ const Waitlist = () => {
                 value={email}
               />
               <button
-                className={`inline-flex w-full items-center justify-center rounded-full bg-white px-9 py-4 text-base text-[#1753F5] disabled:pointer-events-none disabled:opacity-90 ${success ? "bg-green-400" : ""}`}
+                className={`inline-flex w-full items-center justify-center rounded-full px-9 py-4 text-base text-[#1753F5] disabled:pointer-events-none ${success ? "bg-green-400 disabled:opacity-100" : "bg-white disabled:bg-opacity-75"}`}
                 type="submit"
-                disabled={!name || !email || success}
+                disabled={!name || !email || loading || success}
               >
                 {loading ? (
                   <l-bouncy size="32" speed="1.75" color="#255fff"></l-bouncy>
@@ -155,7 +156,7 @@ const Waitlist = () => {
                 )}
               </button>
             </form>
-            <img src={lamp} alt="image of wishing lamp" className="" />
+            <img src={lamp} alt="image of wishing lamp" />
           </div>
         </div>
       </div>

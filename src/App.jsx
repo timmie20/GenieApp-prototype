@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import AppLayout from "./layout/AppLayout";
-import CreateWish from "./pages/CreateWish";
-import Feeds from "./pages/Feeds";
+import { lazy } from "react";
 import { AppContextProvider } from "./context/AppContext";
 import { AuthContextProvider } from "./context/AuthContext";
-import Waitlist from "./pages/Waitlist";
+import AppLayout from "./layout/AppLayout";
+const CreateWish = lazy(() => import("./pages/CreateWish"));
+const Waitlist = lazy(() => import("./pages/Waitlist"));
+import Feeds from "./pages/Feeds";
 
 const App = () => {
   return (

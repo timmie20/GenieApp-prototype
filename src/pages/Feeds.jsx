@@ -8,6 +8,8 @@ const Feeds = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState();
 
+  console.log("hello");
+
   const displayPosts = async () => {
     if (!currentUser) {
       return;
