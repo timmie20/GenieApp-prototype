@@ -11,7 +11,7 @@ const WaitlistNav = () => {
           <h4 className="text-xl font-medium text-white md:text-2xl">Genie</h4>
         </div>
         <div className="hidden items-center gap-4 text-sm text-zinc-200 md:flex">
-          <Link to="#" className="hover:text-white">
+          <Link to="https://x.com/tim_mieee?s=21" className="hover:text-white">
             TWITTER
           </Link>
           <Link to="#" className="hover:text-white">

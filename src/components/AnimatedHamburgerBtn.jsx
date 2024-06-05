@@ -62,7 +62,7 @@ export const AnimatedHamburgerBtn = () => {
               }}
             >
               <nav className="mx-[14px] flex gap-2 text-wrap text-sm text-[#1753F5]">
-                <Link to="#">TWITTER</Link>
+                <Link to="https://x.com/tim_mieee?s=21">TWITTER</Link>
                 <Link to="#">REQUEST A DEMO</Link>
               </nav>
             </motion.div>
