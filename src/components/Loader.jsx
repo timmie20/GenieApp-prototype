@@ -1,12 +1,6 @@
-import React, { useEffect } from "react";
+import { lineSpinner } from "ldrs";
 
 export default function Loader({ ...props }) {
-  useEffect(() => {
-    async function getLoader() {
-      const { lineSpinner } = await import("ldrs");
-      lineSpinner.register();
-    }
-    getLoader();
-  }, []);
+  lineSpinner.register();
   return <l-line-spinner {...props}></l-line-spinner>;
 }

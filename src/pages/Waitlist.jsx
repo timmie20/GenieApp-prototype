@@ -96,8 +96,9 @@ const Waitlist = () => {
       },
     };
 
+    setLoading(true);
+
     try {
-      setLoading(true);
       await axios.request(options);
       sendWelcomeEmail();
       setSuccess(true);
