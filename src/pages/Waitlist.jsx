@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import WaitlistNav from "@/components/WaitlistNav";
 import lamp from "../assets/images/genie lamp.png";
-import "ldrs/bouncy";
 import { toast } from "sonner";
 import SuccessCheck from "@/components/SuccessCheck";
+import Loader from "@/components/Loader";
 
 const Waitlist = () => {
   const [email, setEmail] = useState("");
@@ -96,19 +96,17 @@ const Waitlist = () => {
       },
     };
 
-    setLoading(true);
-
     try {
+      setLoading(true);
       await axios.request(options);
       sendWelcomeEmail();
-      setLoading(false);
       setSuccess(true);
     } catch (error) {
-      setLoading(false);
       toast("Unable to join waitlist", {
         description: "Check network or Contact might already exist",
       });
     } finally {
+      setLoading(false);
       setEmail("");
       setName("");
     }
@@ -148,7 +146,7 @@ const Waitlist = () => {
                 disabled={!name || !email || loading || success}
               >
                 {loading ? (
-                  <l-bouncy size="32" speed="1.75" color="#255fff"></l-bouncy>
+                  <Loader size="25" color="#1753F5" stroke="2" />
                 ) : success ? (
                   <SuccessCheck />
                 ) : (

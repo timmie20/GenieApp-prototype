@@ -5,7 +5,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import AppLayout from "./layout/AppLayout";
 const CreateWish = lazy(() => import("./pages/CreateWish"));
 const Waitlist = lazy(() => import("./pages/Waitlist"));
-import Feeds from "./pages/Feeds";
+const Feeds = lazy(() => import("./pages/Feeds"));
 
 const App = () => {
   return (

@@ -10,22 +10,20 @@ const CreateWish = () => {
   const { userAccountData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
-  console.log("hello");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     if (!userAccountData) {
-      console.log("Sign in to create a post");
+      alert("Sign in to create a post");
     } else {
       try {
+        setLoading(true);
         await createWishPost(wishDesc);
       } catch (error) {
         console.log(error.message);
       } finally {
-        setWishDesc("");
         setLoading(false);
+        setWishDesc("");
       }
     }
   };
